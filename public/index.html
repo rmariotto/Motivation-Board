@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Motivation Board</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <h1>Motivation Board</h1>
+
+    <!-- this container is for our Vue instance -->
+    <div id="main">
+
+        <div class="upload-img">
+            <form action="">
+                <div>
+                    <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                    <input v-model='title' type="text" name="title" class="title" placeholder="title"
+                        autocomplete="off">
+                    <input v-model='username' type="text" name="username" class="username" placeholder="username"
+                        autocomplete="off">
+                    <input v-model='description' type="text" name="description" class="description"
+                        placeholder="description" autocomplete="off">
+                </div>
+                <div class="sub-input">
+                    <input @change='handleChange' type="file" name="file" id="file" class="inputfile" accept="image/*">
+                    <label for="file">Choose a file</label>
+
+                    <button @click='handleClick'>submit</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="container">
+            <div id="id" class="img-card" v-for='image in images'>
+
+                <img :src='image.url' @click='modal(image.id)'>
+                <p>{{ image.description }}</p>
+
+            </div>
+        </div>
+
+        <first-component v-if='id' :id='id'> </first-component>
+
+    </div>
+
+    <!-- outside of main -->
+    <script id="template" type="text/x-template">
+
+        <div class="modal" >
+
+                <div class="modal-container"  >
+
+                    <button  @click="closeModal" id="close-modal-box" >x</button>
+                    <img class="img-modal" :src="url">
+                    
+                    <p>{{ title }}</p>
+                    <p>{{ description }}</p> 
+                   
+                        <div class="modal-comment">
+                            <input v-model='comment' type="text" name="comment" class="comment" placeholder="comment" autocomplete="off">
+                            <button class='modal-btn' @click='submitComment'>submit</button>
+                        </div>
+                        <div class="container-comments" v-for="comment in comments" >
+                            <p>{{ comment.comment }}  by {{ username }}</p>
+                            <p> {{ created_at }}</p> 
+                        </div>
+                </div> 
+                
+        </div>
+    </script>
+
+
+    <script src="/js/vue.js"></script>
+    <script src="/js/axios.min.js"></script>
+    <script src="/js/script.js"></script>
+</body>
+
+</html>
